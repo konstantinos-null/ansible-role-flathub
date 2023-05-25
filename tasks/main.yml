@@ -1,0 +1,13 @@
+---
+# tasks file for flathub
+- name: Install default flatpak repo
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+
+- name: Install flatpak apps
+  community.general.flatpak:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ flatpaks | flatten(levels=1) }}"
